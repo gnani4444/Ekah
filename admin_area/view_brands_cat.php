@@ -1,0 +1,54 @@
+<table width="795" align="center" bgcolor="pink"> 
+
+	
+	<tr align="center">
+		<td colspan="6"><h2>View All Brands Here</h2></td>
+	</tr>
+	
+	<tr align="center" bgcolor="skyblue">
+		<th>S No:</th>
+		
+		<th>Brand Title</th>
+                <th>Category</th>
+		<th>Edit</th>
+		<th>Delete</th>
+	</tr>
+	<?php 
+	include("includes/db.php");
+	
+	$get_brand = "select * from brands";
+	
+	$run_brand = mysqli_query($con, $get_brand); 
+	
+	$i = 0;
+	
+	while ($row_brand=mysqli_fetch_array($run_brand)){
+		
+		$brand_id = $row_brand['brand_id'];
+		$brand_cat_id = $row_brand['brand_cat_id'];
+		$get_cat = "select * from categories where cat_id = '$brand_cat_id' ";
+		$run_cat = mysqli_query($con , $get_cat);
+		if($row_cat = mysqli_fetch_array($run_cat)){
+		$brand_cat_name = $row_cat['cat_title'];
+		}
+		$brand_title = $row_brand['brand_title'];
+		$i++;
+	
+	?>
+	<tr align="center">
+		<td><?php echo $i;?></td>
+		
+		<td><?php echo $brand_title;?></td>
+                <td><?php echo $brand_cat_name;?> </td>
+		<td><a href="index.php?edit_brand=<?php echo $brand_id; ?>">Edit</a></td>
+		<td><a href="delete_brand.php?delete_brand=<?php echo $brand_id;?>">Delete</a></td>
+	
+	</tr>
+	<?php } ?>
+
+
+
+
+</table>
+
+<div><a href="index.php?view_brands">View the Brands According to the Categories</a> </div>
